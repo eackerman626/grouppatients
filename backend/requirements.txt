@@ -1,0 +1,9 @@
+fastapi==0.75.0
+uvicorn[standard]
+pydantic
+databases[postgresql]
+black
+pytest
+requests
+psycopg2
+SQLAlchemy

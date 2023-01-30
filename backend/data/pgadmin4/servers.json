@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "group-builder": {
+      "Name": "Group Builder DB",
+      "Group": "Servers",
+      "Port": 5432,
+      "Username": "charlie-health",
+      "Host": "db",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    }
+  }
+}

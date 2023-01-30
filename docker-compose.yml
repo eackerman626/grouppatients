@@ -1,0 +1,49 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./backend
+    depends_on:
+      - db
+      - test-db
+    volumes:
+      - ./backend:/code
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://charlie-health:password@db/group-builder
+      TEST_DATABASE_URL: postgresql://charlie-health:password@test-db/group-builder
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/public:/code/public
+      - ./frontend/src:/code/src
+      - ./frontend/test:/code/test
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: charlie-health
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: group-builder
+  test-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: charlie-health
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: group-builder
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    volumes:
+      - ./backend/data/pgadmin4/servers.json:/pgadmin4/servers.json
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_UPGRADE_CHECK_ENABLED: 'False'
+    ports:
+      - "5050:80"
+    logging:
+      driver: none
