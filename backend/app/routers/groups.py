@@ -29,10 +29,3 @@ async def read_group_patients(group_id: str, db: Session = Depends(get_db)):
     return repository.get_group_patients(db, group_id)
 
 
-# @router.put("/patients/{patient_id}/availabilities", response_model=list[ScheduleBlock])
-# async def set_patient_availabilities(
-#     patient_id: str, schedule_block_ids: list[int], db: Session = Depends(get_db)
-# ):
-#     return repository.set_patient_availabilities(
-#         db=db, patient_id=patient_id, schedule_block_ids=schedule_block_ids
-#     )
