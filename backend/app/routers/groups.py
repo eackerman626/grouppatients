@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from app.data_access.schemas import Group, GroupBase
+from app.data_access.schemas import Group, GroupBase, Patient
 from app.data_access import repository
 from typing import List
 from sqlalchemy.orm import Session
