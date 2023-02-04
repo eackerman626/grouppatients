@@ -31,6 +31,12 @@ class Patient(Base):
         "ScheduleBlock", secondary=patients_availabilities_table)
 
 
+class Group(Base):
+    __tablename__ = "groups"
+    id = Column(Integer, primary_key=True, index=True)
+    group_name = Column(Text, nullable=False)
+
+
 class DaysOfWeek(enum.Enum):
     monday = MONDAY
     tuesday = TUESDAY

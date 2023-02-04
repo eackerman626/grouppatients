@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from calendar import MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY
 
-from .routers import patients, schedule_blocks
+from .routers import patients, schedule_blocks, groups
 from app.data_access.database import engine
 from app.data_access import models, schemas
 from app.dependencies import seed_patients, seed_schedule_blocks, seed_schedule_blocks_for_patient, drop_tables, truncate_tables
@@ -24,12 +24,14 @@ app.add_middleware(
 
 app.include_router(patients.router)
 app.include_router(schedule_blocks.router)
+app.include_router(groups.router)
 
 
 app_tables = [
     "patients_availabilities",
     "patients",
     "schedule_blocks",
+    "groups"
 ]
 
 

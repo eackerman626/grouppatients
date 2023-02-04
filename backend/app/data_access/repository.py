@@ -74,3 +74,16 @@ def get_schedule_blocks(db: Session, skip: int = 0, limit: int = 100):
         .limit(limit)
         .all()
     )
+
+
+def get_groups(db: Session, skip: int = 0, limit: int = 100):
+    return (
+        db.query(models.Group)
+        .order_by(models.Group.id)
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+def get_group(db: Session, group_id: str | int):
+    return db.query(models.Group).filter(models.Group.id == group_id).first()

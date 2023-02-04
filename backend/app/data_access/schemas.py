@@ -26,3 +26,13 @@ class Patient(PatientBase):
 
     class Config:
         orm_mode = True
+
+class GroupBase(BaseModel):
+    group_name: str
+
+
+class Group(GroupBase):
+    id: int
+
+    class Config:
+        orm_mode = True
