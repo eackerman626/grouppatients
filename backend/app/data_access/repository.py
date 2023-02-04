@@ -85,5 +85,24 @@ def get_groups(db: Session, skip: int = 0, limit: int = 100):
         .all()
     )
 
+
 def get_group(db: Session, group_id: str | int):
     return db.query(models.Group).filter(models.Group.id == group_id).first()
+
+
+def create_group(db: Session, group: schemas.GroupBase):
+    db_group = models.Group(
+        group_name=group.group_name,
+    )
+    db.add(db_group)
+    db.commit()
+    db.refresh(db_group)
+    return db_group
+
+    
+def get_group_patients(db: Session, group_id: str | int):
+    group = db.query(models.Group).filter(
+        models.Group.id == group_id).first()
+    if group is None:
+        return None
+    return group.patients

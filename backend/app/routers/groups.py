@@ -19,14 +19,14 @@ async def read_group(group_id: str, db: Session = Depends(get_db)):
     return repository.get_group(db, group_id)
 
 
-# @router.post("/patients", response_model=Patient)
-# async def create_patient(patient: PatientBase, db: Session = Depends(get_db)):
-#     return repository.create_patient(db=db, patient=patient)
+@router.post("/groups", response_model=Group)
+async def create_group(group: GroupBase, db: Session = Depends(get_db)):
+    return repository.create_group(db=db, group=group)
 
 
-# @router.get("/patients/{patient_id}/availabilities", response_model=list[ScheduleBlock])
-# async def read_patient_availability(patient_id: str, db: Session = Depends(get_db)):
-#     return repository.get_patient_availabilities(db, patient_id)
+@router.get("/groups/{group_id}/patients", response_model=list[Patient])
+async def read_group_patients(group_id: str, db: Session = Depends(get_db)):
+    return repository.get_group_patients(db, group_id)
 
 
 # @router.put("/patients/{patient_id}/availabilities", response_model=list[ScheduleBlock])
