@@ -1,6 +1,6 @@
 from sqlalchemy import text
 from app.data_access.database import SessionLocal
-from app.data_access.repository import create_patient, create_schedule_block, set_patient_availabilities, create_group
+from app.data_access.repository import create_patient, create_schedule_block, set_patient_availabilities, create_group, set_patient_group
 from app.data_access.schemas import Patient, ScheduleBlock, Group
 
 
@@ -87,3 +87,9 @@ def seed_groups(groups):
         db_group = create_group(db=session, group=group)
         created_groups.append(Group.from_orm(db_group))
     return created_groups
+
+
+def seed_group_for_patient(patient, group):
+    session_generator = get_db()
+    session = next(session_generator, None)
+    set_patient_group(db=session, patient_id=patient.id, group_id=group.id)

@@ -5,7 +5,7 @@ from calendar import MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY
 from .routers import patients, schedule_blocks, groups
 from app.data_access.database import engine
 from app.data_access import models, schemas
-from app.dependencies import seed_patients, seed_schedule_blocks, seed_schedule_blocks_for_patient, drop_tables, truncate_tables, seed_groups
+from app.dependencies import seed_patients, seed_schedule_blocks, seed_schedule_blocks_for_patient, drop_tables, truncate_tables, seed_groups, seed_group_for_patient
 
 # This creates tables in the database as they are declared in models.py
 models.Base.metadata.create_all(bind=engine)
@@ -53,19 +53,25 @@ async def startup_event():
             schemas.PatientBase(first_name="Natasha", last_name="Romanoff"),
             schemas.PatientBase(first_name="Carol", last_name="Danvers"),
             schemas.PatientBase(first_name="Wanda", last_name="Maximoff"),
+            schemas.PatientBase(first_name="James", last_name="Holden"),
+            schemas.PatientBase(first_name="Naomi", last_name="Nagata"),
+            schemas.PatientBase(first_name="Amos", last_name="Burton"),
         ]
     )
-    for index, patient in enumerate(patients):
-        patient_schedule_blocks = [schedule_blocks[index],
-                                   schedule_blocks[index + 3], schedule_blocks[index + 6]]
-        seed_schedule_blocks_for_patient(
-            patient=patient, schedule_blocks=patient_schedule_blocks)
     groups = seed_groups(
         [
             schemas.GroupBase(group_name="First Group"),
             schemas.GroupBase(group_name="Second Group"),
+            schemas.GroupBase(group_name="Third Group"),
         ]
     )
+    for index, patient in enumerate(patients):
+        patient_schedule_blocks = [schedule_blocks[index % 3],
+                                   schedule_blocks[index % 3 + 3], schedule_blocks[index % 3 + 6]]
+        seed_schedule_blocks_for_patient(
+            patient=patient, schedule_blocks=patient_schedule_blocks)
+        seed_group_for_patient(
+            patient=patient, group=groups[index % 3])
 
 
 @app.on_event("shutdown")

@@ -29,6 +29,8 @@ class Patient(Base):
     last_name = Column(Text, nullable=False)
     availabilities = relationship(
         "ScheduleBlock", secondary=patients_availabilities_table)
+    group_id = Column(Integer, ForeignKey("groups.id"))
+    group = relationship("Group")
 
 
 class Group(Base):
