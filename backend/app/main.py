@@ -5,7 +5,7 @@ from calendar import MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY
 from .routers import patients, schedule_blocks, groups
 from app.data_access.database import engine
 from app.data_access import models, schemas
-from app.dependencies import seed_patients, seed_schedule_blocks, seed_schedule_blocks_for_patient, drop_tables, truncate_tables
+from app.dependencies import seed_patients, seed_schedule_blocks, seed_schedule_blocks_for_patient, drop_tables, truncate_tables, seed_groups
 
 # This creates tables in the database as they are declared in models.py
 models.Base.metadata.create_all(bind=engine)
@@ -60,6 +60,12 @@ async def startup_event():
                                    schedule_blocks[index + 3], schedule_blocks[index + 6]]
         seed_schedule_blocks_for_patient(
             patient=patient, schedule_blocks=patient_schedule_blocks)
+    groups = seed_groups(
+        [
+            schemas.GroupBase(group_name="First Group"),
+            schemas.GroupBase(group_name="Second Group"),
+        ]
+    )
 
 
 @app.on_event("shutdown")

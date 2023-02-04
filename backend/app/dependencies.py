@@ -1,7 +1,7 @@
 from sqlalchemy import text
 from app.data_access.database import SessionLocal
-from app.data_access.repository import create_patient, create_schedule_block, set_patient_availabilities
-from app.data_access.schemas import Patient, ScheduleBlock
+from app.data_access.repository import create_patient, create_schedule_block, set_patient_availabilities, create_group
+from app.data_access.schemas import Patient, ScheduleBlock, Group
 
 
 def get_db():
@@ -77,3 +77,13 @@ def delete_schedule_blocks():
     drop_query = text("DELETE FROM schedule_blocks")
     session.execute(drop_query)
     session.commit()
+
+
+def seed_groups(groups):
+    created_groups = []
+    session_generator = get_db()
+    session = next(session_generator, None)
+    for group in groups:
+        db_group = create_group(db=session, group=group)
+        created_groups.append(Group.from_orm(db_group))
+    return created_groups
