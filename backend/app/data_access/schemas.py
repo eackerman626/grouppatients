@@ -30,7 +30,7 @@ class PatientBase(BaseModel):
     first_name: str
     last_name: str
     availabilities: list[ScheduleBlock] = []
-    group: Group
+    group: Group = None
 
 
 class Patient(PatientBase):
