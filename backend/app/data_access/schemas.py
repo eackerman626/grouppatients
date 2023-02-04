@@ -15,23 +15,25 @@ class ScheduleBlock(ScheduleBlockBase):
         orm_mode = True
 
 
-class PatientBase(BaseModel):
-    first_name: str
-    last_name: str
-    availabilities: list[ScheduleBlock] = []
-
-
-class Patient(PatientBase):
-    id: int
-
-    class Config:
-        orm_mode = True
-
 class GroupBase(BaseModel):
     group_name: str
 
 
 class Group(GroupBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class PatientBase(BaseModel):
+    first_name: str
+    last_name: str
+    availabilities: list[ScheduleBlock] = []
+    group: Group
+
+
+class Patient(PatientBase):
     id: int
 
     class Config:

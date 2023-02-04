@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from app.data_access.schemas import Patient, PatientBase, ScheduleBlock
+from app.data_access.schemas import Patient, PatientBase, ScheduleBlock, Group
 from app.data_access import repository
 from typing import List
 from sqlalchemy.orm import Session
@@ -35,4 +35,13 @@ async def set_patient_availabilities(
 ):
     return repository.set_patient_availabilities(
         db=db, patient_id=patient_id, schedule_block_ids=schedule_block_ids
+    )
+
+
+@router.put("/patients/{patient_id}/group", response_model=Group)
+async def set_patient_group(
+    patient_id: str, group_id: str, db: Session = Depends(get_db)
+):
+    return repository.set_patient_group(
+        db=db, patient_id=patient_id, group_id=group_id
     )
