@@ -8,14 +8,6 @@ interface GroupProps {
 }
 
 const Group: FC<GroupProps> = (props) => {
-	const [groupPatients, setGroupPatients] = useState<PatientData[]>([]);
-
-	useEffect(() => {
-		(async () => {
-			setGroupPatients(await getGroupPatients(props && props.group ? props.group.id : null));
-		})();
-	}, []);
-
 	return (
 		<span data-testid="group">
 			{props.group.group_name}&nbsp;
