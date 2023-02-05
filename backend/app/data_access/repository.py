@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 
 
-def get_patient(db: Session, patient_id: str | int):
+def get_patient(db: Session, patient_id: str or int):
     return db.query(models.Patient).filter(models.Patient.id == patient_id).first()
 
 
@@ -30,7 +30,7 @@ def create_patient(db: Session, patient: schemas.PatientBase):
     return db_patient
 
 
-def get_patient_availabilities(db: Session, patient_id: str | int):
+def get_patient_availabilities(db: Session, patient_id: str or int):
     patient = db.query(models.Patient).filter(
         models.Patient.id == patient_id).first()
     if patient is None:
@@ -86,7 +86,7 @@ def get_groups(db: Session, skip: int = 0, limit: int = 100):
     )
 
 
-def get_group(db: Session, group_id: str | int):
+def get_group(db: Session, group_id: str or int):
     return db.query(models.Group).filter(models.Group.id == group_id).first()
 
 
@@ -99,8 +99,8 @@ def create_group(db: Session, group: schemas.GroupBase):
     db.refresh(db_group)
     return db_group
 
-    
-def get_group_patients(db: Session, group_id: str | int):
+
+def get_group_patients(db: Session, group_id: str or int):
     patients = db.query(models.Patient).filter(
         models.Patient.group_id == group_id).all()
     return patients
