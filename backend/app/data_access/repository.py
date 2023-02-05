@@ -113,6 +113,8 @@ def set_patient_group(db: Session, patient_id: int, group_id: int):
         return None
     group = db.query(models.Group).filter(
         models.Group.id == group_id).first()
+    if group is None:
+        return None
     patient.group = group
     db.commit()
     return group

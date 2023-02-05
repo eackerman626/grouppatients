@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from pydantic import BaseModel
 from app.data_access.schemas import Patient, PatientBase, ScheduleBlock, Group
 from app.data_access import repository
 from typing import List
@@ -7,6 +8,10 @@ from app.dependencies import get_db
 
 
 router = APIRouter(tags=["patients"])
+
+
+class Payload(BaseModel):
+    group_id: str
 
 
 @router.get("/patients/unassigned", response_model=List[Patient])
@@ -43,10 +48,13 @@ async def set_patient_availabilities(
     )
 
 
+# not sure best convention here, I was mimicking what I saw above
 @router.put("/patients/{patient_id}/group", response_model=Group)
 async def set_patient_group(
-    patient_id: str, group_id: str, db: Session = Depends(get_db)
+    patient_id: str, payload: Payload = None, db: Session = Depends(get_db)
 ):
+    # TO-DO: throw readable error in case payload is None or group_id doesn't exist
+    group_id = payload.group_id
     return repository.set_patient_group(
         db=db, patient_id=patient_id, group_id=group_id
     )
