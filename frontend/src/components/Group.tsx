@@ -16,17 +16,11 @@ const Group: FC<GroupProps> = (props) => {
 		})();
 	}, []);
 
-	// const handleAddGroup = (group: GroupData): void => {
-	// 	setGroupss([...groups, group]);
-	// };
-
-	// const handleAddPatientToGroup = {...add this later}
-
 	return (
 		<span data-testid="group">
 			{props.group.group_name}&nbsp;
 			<span>
-				<GroupPatients patients={groupPatients} />
+				<GroupPatients group={props.group} />
 			</span>
 		</span>
 	);

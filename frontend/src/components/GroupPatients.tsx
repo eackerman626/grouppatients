@@ -1,18 +1,37 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { PatientData } from '../requests/patients';
 import Patient from './Patient';
+import RemovePatientFromGroupButton from './RemovePatientFromGroupButton';
+import { getGroupPatients, GroupData } from '../requests/groups';
 
 interface GroupPatientProps {
-	patients: PatientData[];
+	group: GroupData;
 }
 
 const GroupPatients: FC<GroupPatientProps> = (props) => {
+	const [groupPatients, setGroupPatients] = useState<PatientData[]>([]);
+
+	useEffect(() => {
+		(async () => {
+			setGroupPatients(await getGroupPatients(props.group ? props.group.id : null));
+		})();
+	}, []);
+
+	const handleRemovePatientFromGroup = async (): Promise<void> => {
+		setGroupPatients(await getGroupPatients(props.group.id));
+	};
+
 	return (
 		<div data-testid="group-patients">
 			{
 				<ul>
-					{props.patients.map((patient: PatientData) => {
-						return <li key={patient.id}>{<Patient patient={patient} />}</li>;
+					{groupPatients.map((patient: PatientData) => {
+						return (
+							<li key={patient.id}>
+								{<Patient patient={patient} />}
+								{<RemovePatientFromGroupButton patient={patient} onRemovePatientFromGroup={handleRemovePatientFromGroup} />}
+							</li>
+						);
 					})}
 				</ul>
 			}
