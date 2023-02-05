@@ -45,3 +45,12 @@ async def set_patient_group(
     return repository.set_patient_group(
         db=db, patient_id=patient_id, group_id=group_id
     )
+
+
+@router.put("/patients/{patient_id}/remove-group", response_model=bool)
+async def remove_patient_group(
+    patient_id: str, db: Session = Depends(get_db)
+):
+    return repository.remove_patient_group(
+        db=db, patient_id=patient_id
+    )
