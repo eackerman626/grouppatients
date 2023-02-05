@@ -14,7 +14,7 @@ export interface GroupPatientData {
 	patients: PatientData[];
 }
 
-export const getGroupPatients = async (group_id: number | null): Promise<PatientData[]> => {
+export const getGroupPatients = async (group_id: number): Promise<PatientData[]> => {
 	const response = await fetch(`http://localhost:8000/groups/${group_id}/patients`);
 	return await response.json();
 };

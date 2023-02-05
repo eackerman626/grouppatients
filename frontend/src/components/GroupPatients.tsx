@@ -13,7 +13,9 @@ const GroupPatients: FC<GroupPatientProps> = (props) => {
 
 	useEffect(() => {
 		(async () => {
-			setGroupPatients(await getGroupPatients(props.group ? props.group.id : null));
+			if (props.group) {
+				setGroupPatients(await getGroupPatients(props.group.id));
+			}
 		})();
 	}, []);
 
