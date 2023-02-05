@@ -1,6 +1,5 @@
-import { FC, useEffect, useState } from 'react';
-import { getGroupPatients, GroupData } from '../requests/groups';
-import { PatientData } from '../requests/patients';
+import { FC } from 'react';
+import { GroupData } from '../requests/groups';
 import GroupPatients from '../components/GroupPatients';
 
 interface GroupProps {
