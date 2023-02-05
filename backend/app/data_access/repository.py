@@ -126,3 +126,14 @@ def remove_patient_group(db: Session, patient_id: int):
     patient.group = None
     db.commit()
     return True
+
+
+def get_unassigned_patients(db: Session, skip: int = 0, limit: int = 100):
+    return (
+        db.query(models.Patient)
+        .filter(models.Patient.group_id == None)
+        .order_by(models.Patient.id)
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )

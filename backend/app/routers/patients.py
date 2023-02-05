@@ -9,6 +9,11 @@ from app.dependencies import get_db
 router = APIRouter(tags=["patients"])
 
 
+@router.get("/patients/unassigned", response_model=List[Patient])
+async def read_unassigned_patients(db: Session = Depends(get_db)):
+    return repository.get_unassigned_patients(db)
+
+
 @router.get("/patients", response_model=List[Patient])
 async def read_patients(db: Session = Depends(get_db)):
     return repository.get_patients(db)
