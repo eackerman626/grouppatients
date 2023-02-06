@@ -11,10 +11,6 @@ const GroupsList: FC = () => {
 		})();
 	}, []);
 
-	// const handleAddGroup = (group: GroupData): void => {
-	// 	setGroupss([...groups, group]);
-	// };
-
 	return (
 		<div>
 			<h1>Groups</h1>
