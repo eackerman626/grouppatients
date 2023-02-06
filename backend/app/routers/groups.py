@@ -27,5 +27,3 @@ async def create_group(group: GroupBase, db: Session = Depends(get_db)):
 @router.get("/groups/{group_id}/patients", response_model=list[Patient])
 async def read_group_patients(group_id: str, db: Session = Depends(get_db)):
     return repository.get_group_patients(db, group_id)
-
-

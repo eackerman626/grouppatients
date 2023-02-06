@@ -53,7 +53,6 @@ async def set_patient_availabilities(
 async def set_patient_group(
     patient_id: str, payload: Payload = None, db: Session = Depends(get_db)
 ):
-    # TO-DO: throw readable error in case payload is None or group_id doesn't exist
     group_id = payload.group_id
     return repository.set_patient_group(
         db=db, patient_id=patient_id, group_id=group_id
