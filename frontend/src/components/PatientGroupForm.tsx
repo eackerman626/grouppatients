@@ -37,6 +37,9 @@ const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {
 	};
 
 	function doesPatientHaveOverlap(patient: PatientData, existingPatients: PatientData[]) {
+		if (existingPatients.length === 0) {
+			return true;
+		}
 		const patCheckSumAry = checkSumAry(patient.availabilities);
 		const allAvailabilities = [];
 		if (!existingPatients.length) {
