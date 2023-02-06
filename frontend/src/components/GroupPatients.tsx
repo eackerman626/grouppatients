@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from 'react';
-import { PatientData } from '../requests/patients';
+import { PatientData, getUnassignedPatients } from '../requests/patients';
 import Patient from './Patient';
 import RemovePatientFromGroupButton from './RemovePatientFromGroupButton';
 import { getGroupPatients, GroupData } from '../requests/groups';
@@ -11,10 +11,12 @@ interface GroupPatientProps {
 
 const GroupPatients: FC<GroupPatientProps> = (props) => {
 	const [groupPatients, setGroupPatients] = useState<PatientData[]>([]);
+	const [unassignedPatients, setUnassignedPatients] = useState<PatientData[]>([]);
 
 	useEffect(() => {
 		(async () => {
 			setGroupPatients(await getGroupPatients(props.group.id));
+			setUnassignedPatients(await getUnassignedPatients());
 		})();
 	}, [props.group]);
 
@@ -22,10 +24,18 @@ const GroupPatients: FC<GroupPatientProps> = (props) => {
 		setGroupPatients((prevGroupPatients: PatientData[]) => {
 			return prevGroupPatients.filter((pat) => pat.id !== removedPatient.id);
 		});
+		setUnassignedPatients((prevUnassignedPatients: PatientData[]) => {
+			return [...prevUnassignedPatients, removedPatient];
+		});
 	};
 
 	const handleAssignPatientToGroup = (assignedPatient: PatientData): void => {
-		setGroupPatients([...groupPatients, assignedPatient]);
+		setGroupPatients((prevGroupPatients: PatientData[]) => {
+			return [...prevGroupPatients, assignedPatient];
+		});
+		setUnassignedPatients((prevUnassignedPatients: PatientData[]) => {
+			return prevUnassignedPatients.filter((pat) => pat.id !== assignedPatient.id);
+		});
 	};
 
 	return (
@@ -39,7 +49,7 @@ const GroupPatients: FC<GroupPatientProps> = (props) => {
 						</li>
 					);
 				})}
-				<li>{<PatientGroupForm group={props.group} groupPatients={groupPatients} onAssignPatientToGroup={handleAssignPatientToGroup} />}</li>
+				<li>{<PatientGroupForm group={props.group} groupPatients={groupPatients} unassignedPatients={unassignedPatients} onAssignPatientToGroup={handleAssignPatientToGroup} />}</li>
 			</ul>
 		</div>
 	);

@@ -6,6 +6,7 @@ import { ScheduleBlock } from './Schedule';
 interface AssignPatientToGroupProps {
 	group: GroupData;
 	groupPatients: PatientData[];
+	unassignedPatients: PatientData[];
 	onAssignPatientToGroup: (patient: PatientData) => void;
 }
 
@@ -22,10 +23,9 @@ const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {
 
 	useEffect(() => {
 		(async () => {
-			const unassignedPatients = await getUnassignedPatients();
-			setAvailablePatients(unassignedPatients.filter((pat) => doesPatientHaveOverlap(pat, props.groupPatients)));
+			setAvailablePatients(props.unassignedPatients.filter((pat) => doesPatientHaveOverlap(pat, props.groupPatients)));
 		})();
-	}, [props.groupPatients]);
+	}, [props.groupPatients, props.unassignedPatients]);
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		event.preventDefault();
