@@ -3,14 +3,14 @@ import { removePatientFromGroup, PatientData } from '../requests/patients';
 
 interface RemovePatientFromGroupProps {
 	patient: PatientData;
-	onRemovePatientFromGroup: (patient: PatientData) => void;
+	onRemovePatientFromGroup: (removedPatient: PatientData) => void;
 }
 
-const RemovePatientFromGroupButton: FC<RemovePatientFromGroupProps> = ({ patient, onRemovePatientFromGroup }) => {
+const RemovePatientFromGroupButton: FC<RemovePatientFromGroupProps> = (props) => {
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		event.preventDefault();
-		await removePatientFromGroup(patient.id);
-		await onRemovePatientFromGroup(patient);
+		await removePatientFromGroup(props.patient.id);
+		await props.onRemovePatientFromGroup(props.patient);
 	};
 
 	return (
