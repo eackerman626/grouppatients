@@ -8,7 +8,7 @@ interface GroupProps {
 
 const Group: FC<GroupProps> = (props) => {
 	return (
-		<span data-testid="group">
+		<span>
 			{props.group.group_name}&nbsp;
 			<span>
 				<GroupPatients group={props.group} />

@@ -29,20 +29,18 @@ const GroupPatients: FC<GroupPatientProps> = (props) => {
 	};
 
 	return (
-		<div data-testid="group-patients">
-			{
-				<ul>
-					{groupPatients.map((patient: PatientData) => {
-						return (
-							<li key={patient.id}>
-								{<Patient patient={patient} />}
-								{<RemovePatientFromGroupButton patient={patient} onRemovePatientFromGroup={handleRemovePatientFromGroup} />}
-							</li>
-						);
-					})}
-					<li>{<PatientGroupForm group={props.group} groupPatients={groupPatients} onAssignPatientToGroup={handleAssignPatientToGroup} />}</li>
-				</ul>
-			}
+		<div>
+			<ul>
+				{groupPatients.map((patient: PatientData) => {
+					return (
+						<li key={patient.id}>
+							{<Patient patient={patient} />}
+							{<RemovePatientFromGroupButton patient={patient} onRemovePatientFromGroup={handleRemovePatientFromGroup} />}
+						</li>
+					);
+				})}
+				<li>{<PatientGroupForm group={props.group} groupPatients={groupPatients} onAssignPatientToGroup={handleAssignPatientToGroup} />}</li>
+			</ul>
 		</div>
 	);
 };

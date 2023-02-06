@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import PatientsList from './components/PatientsList';
 import GroupsList from './components/GroupsList';
-import Group from './components/Group';
 
 const App: FC = () => {
 	return (

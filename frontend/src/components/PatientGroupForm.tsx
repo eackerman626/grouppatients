@@ -31,7 +31,7 @@ const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {
 		event.preventDefault();
 		if (patient && patient.id > 0) {
 			await putPatientGroup(patient.id, props.group.id);
-			await props.onAssignPatientToGroup(patient);
+			props.onAssignPatientToGroup(patient);
 			setPatient(defaultPatient);
 		}
 	};
@@ -56,18 +56,17 @@ const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {
 
 	const handleChange = () => (event: ChangeEvent<HTMLSelectElement>) => {
 		if (parseInt(event.target.value) > 0) {
-			const patient = availablePatients.find((pat) => String(pat.id) === event.target.value);
+			const patient = availablePatients.find((pat: PatientData) => String(pat.id) === event.target.value);
 			setPatient(patient);
 		}
 	};
 
-	// TO-DO: gray out the Assign button if either patient or group is not selected
 	return (
-		<span data-testid="patient-group-form">
+		<span>
 			<form onSubmit={handleSubmit}>
 				<label>Add Patient to Group: </label>
 				<select name="Patient" id={`select-patient-${props.group.id}`} style={{ width: 150 }} onChange={handleChange()}>
-					<option value="" />
+					<option value={-1} />
 					{availablePatients.map((patient) => (
 						<option value={patient.id} key={patient.id}>
 							{patient.first_name} {patient.last_name}
