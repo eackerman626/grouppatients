@@ -3,6 +3,7 @@ import { PatientData } from '../requests/patients';
 import Patient from './Patient';
 import RemovePatientFromGroupButton from './RemovePatientFromGroupButton';
 import { getGroupPatients, GroupData } from '../requests/groups';
+import PatientGroupForm from './PatientGroupForm';
 
 interface GroupPatientProps {
 	group: GroupData;
@@ -23,6 +24,10 @@ const GroupPatients: FC<GroupPatientProps> = (props) => {
 		setGroupPatients(await getGroupPatients(props.group.id));
 	};
 
+	const handleAssignPatientToGroup = (assignedPatient: PatientData): void => {
+		setGroupPatients([...groupPatients, assignedPatient]);
+	};
+
 	return (
 		<div data-testid="group-patients">
 			{
@@ -35,6 +40,7 @@ const GroupPatients: FC<GroupPatientProps> = (props) => {
 							</li>
 						);
 					})}
+					<li>Add Patient to Group: {<PatientGroupForm group={props.group} onAssignPatientToGroup={handleAssignPatientToGroup} />}</li>
 				</ul>
 			}
 		</div>

@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import Group from './Group';
 import { getGroups, GroupData } from '../requests/groups';
-import PatientGroupForm from './PatientGroupForm';
 
 const GroupsList: FC = () => {
 	const [groups, setGroups] = useState<GroupData[]>([]);
@@ -16,8 +15,6 @@ const GroupsList: FC = () => {
 	// 	setGroupss([...groups, group]);
 	// };
 
-	// const handleAddPatientToGroup = {...add this later}
-
 	return (
 		<div>
 			<h1>Groups</h1>
@@ -26,8 +23,6 @@ const GroupsList: FC = () => {
 					return <li key={group.id}>{<Group group={group} />}</li>;
 				})}
 			</ul>
-			<h2>Assign Patient to Group</h2>
-			<PatientGroupForm groups={groups} />
 		</div>
 	);
 };
