@@ -65,8 +65,8 @@ const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {
 	return (
 		<span data-testid="patient-group-form">
 			<form onSubmit={handleSubmit}>
-				<label>Patient </label>
-				<select name="Patient" id="patient" onChange={handleChange()}>
+				<label>Add Patient to Group: </label>
+				<select name="Patient" id={`select-patient-${props.group.id}`} style={{ width: 150 }} onChange={handleChange()}>
 					<option value="" />
 					{availablePatients.map((patient) => (
 						<option value={patient.id} key={patient.id}>

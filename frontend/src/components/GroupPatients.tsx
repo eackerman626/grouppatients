@@ -40,7 +40,7 @@ const GroupPatients: FC<GroupPatientProps> = (props) => {
 							</li>
 						);
 					})}
-					<li>Add Patient to Group: {<PatientGroupForm group={props.group} onAssignPatientToGroup={handleAssignPatientToGroup} />}</li>
+					<li>{<PatientGroupForm group={props.group} groupPatients={groupPatients} onAssignPatientToGroup={handleAssignPatientToGroup} />}</li>
 				</ul>
 			}
 		</div>
