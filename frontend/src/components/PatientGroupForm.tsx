@@ -58,6 +58,8 @@ const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {
 		if (parseInt(event.target.value) > 0) {
 			const patient = availablePatients.find((pat: PatientData) => String(pat.id) === event.target.value);
 			setPatient(patient);
+		} else {
+			setPatient(defaultPatient);
 		}
 	};
 
