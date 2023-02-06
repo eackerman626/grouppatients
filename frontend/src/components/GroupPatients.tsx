@@ -14,14 +14,14 @@ const GroupPatients: FC<GroupPatientProps> = (props) => {
 
 	useEffect(() => {
 		(async () => {
-			if (props.group) {
-				setGroupPatients(await getGroupPatients(props.group.id));
-			}
+			setGroupPatients(await getGroupPatients(props.group.id));
 		})();
-	}, []);
+	}, [props.group]);
 
-	const handleRemovePatientFromGroup = async (): Promise<void> => {
-		setGroupPatients(await getGroupPatients(props.group.id));
+	const handleRemovePatientFromGroup = async (removedPatient: PatientData): Promise<void> => {
+		setGroupPatients((prevGroupPatients: PatientData[]) => {
+			return prevGroupPatients.filter((pat) => pat.id !== removedPatient.id);
+		});
 	};
 
 	const handleAssignPatientToGroup = (assignedPatient: PatientData): void => {
