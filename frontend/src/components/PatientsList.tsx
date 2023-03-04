@@ -8,19 +8,19 @@ import {
 } from "../requests/schedule_blocks";
 import AddPatientAvailabilityForm from "./AddPatientAvailabilityForm";
 
-import { Dispatch } from "redux"
-import { useSelector, useDispatch } from "react-redux"
+import { useAppSelector, useAppDispatch } from "../store";
+
 import { PatientState } from "../store/reducer";
-import { addPatient } from "../store/actionCreators";
+import { patientAdded } from "../store/patientSlice";
 
 const PatientsList: FC = () => {
-  const patients: PatientData[] = useSelector(
+  const patients: PatientData[] = useAppSelector(
     (state: PatientState) => state.patients
   )
-  const dispatch: Dispatch<any> = useDispatch()
+  const dispatch = useAppDispatch()
 
   const handleAddPatient = useCallback(
-    (patient: PatientData) => dispatch(addPatient(patient)),
+    (patient: PatientData) => dispatch(patientAdded(patient)),
     [dispatch]
   )
 
