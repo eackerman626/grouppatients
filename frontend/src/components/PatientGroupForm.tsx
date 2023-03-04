@@ -15,6 +15,7 @@ const defaultPatient = {
 	first_name: '',
 	last_name: '',
 	availabilities: [],
+	group: null,
 };
 
 const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {

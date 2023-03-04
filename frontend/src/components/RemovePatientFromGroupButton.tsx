@@ -1,4 +1,6 @@
 import { FC, FormEvent } from 'react';
+import { Dispatch } from "redux"
+import { useDispatch } from "react-redux"
 import { removePatientFromGroup, PatientData } from '../requests/patients';
 
 interface RemovePatientFromGroupProps {

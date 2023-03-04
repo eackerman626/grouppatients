@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useCallback } from "react";
 import AddPatientForm from "./AddPatientForm";
 import Patient from "./Patient";
 import { getPatients, PatientData } from "../requests/patients";
@@ -8,32 +8,47 @@ import {
 } from "../requests/schedule_blocks";
 import AddPatientAvailabilityForm from "./AddPatientAvailabilityForm";
 
+import { Dispatch } from "redux"
+import { useSelector, useDispatch } from "react-redux"
+import { PatientState } from "../store/reducer";
+import { addPatient } from "../store/actionCreators";
+
 const PatientsList: FC = () => {
-  const [patients, setPatients] = useState<PatientData[]>([]);
+  const patients: PatientData[] = useSelector(
+    (state: PatientState) => state.patients
+  )
+  const dispatch: Dispatch<any> = useDispatch()
+
+  const handleAddPatient = useCallback(
+    (patient: PatientData) => dispatch(addPatient(patient)),
+    [dispatch]
+  )
+
+  //const [patients, setPatients] = useState<PatientData[]>([]);
   const [scheduleBlocks, setScheduleBlocks] = useState<ScheduleBlockData[]>([]);
 
   useEffect(() => {
     (async () => {
-      setPatients(await getPatients());
+      // setPatients(await getPatients());
       setScheduleBlocks(await getScheduleBlocks());
     })();
   }, []);
 
-  const handleAddPatient = (patient: PatientData): void => {
-    setPatients([...patients, patient]);
-  };
+  // const handleAddPatient = (patient: PatientData): void => {
+  //   setPatients([...patients, patient]);
+  // };
 
   const handleAddPatientAvailability = (
     updatedPatient: PatientData,
     scheduleBlocks: ScheduleBlockData[]
   ): void => {
-    setPatients(
-      patients.map((patient) =>
-        patient.id === updatedPatient.id
-          ? { ...updatedPatient, availabilities: scheduleBlocks }
-          : patient
-      )
-    );
+    // setPatients(
+    //   patients.map((patient) =>
+    //     patient.id === updatedPatient.id
+    //       ? { ...updatedPatient, availabilities: scheduleBlocks }
+    //       : patient
+    //   )
+    // );
   };
 
   return (

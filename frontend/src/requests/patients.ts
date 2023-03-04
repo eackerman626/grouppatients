@@ -6,6 +6,7 @@ export interface PatientData {
 	first_name: string;
 	last_name: string;
 	availabilities: ScheduleBlockData[];
+	group: GroupData | null;
 }
 
 export interface PostPatientsPayload {
