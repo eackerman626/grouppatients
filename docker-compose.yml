@@ -11,8 +11,8 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://charlie-health:password@db/group-builder
-      TEST_DATABASE_URL: postgresql://charlie-health:password@test-db/group-builder
+      DATABASE_URL: postgresql://emily:password@db/group-builder
+      TEST_DATABASE_URL: postgresql://emily:password@test-db/group-builder
   frontend:
     build:
       context: ./frontend
@@ -25,13 +25,13 @@ services:
   db:
     image: postgres
     environment:
-      POSTGRES_USER: charlie-health
+      POSTGRES_USER: emily
       POSTGRES_PASSWORD: password
       POSTGRES_DB: group-builder
   test-db:
     image: postgres
     environment:
-      POSTGRES_USER: charlie-health
+      POSTGRES_USER: emily
       POSTGRES_PASSWORD: password
       POSTGRES_DB: group-builder
   pgadmin:

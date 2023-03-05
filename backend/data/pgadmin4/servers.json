@@ -4,7 +4,7 @@
       "Name": "Group Builder DB",
       "Group": "Servers",
       "Port": 5432,
-      "Username": "charlie-health",
+      "Username": "emily",
       "Host": "db",
       "SSLMode": "prefer",
       "MaintenanceDB": "postgres"
