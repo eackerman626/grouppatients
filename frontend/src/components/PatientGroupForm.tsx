@@ -1,7 +1,11 @@
 import { FC, FormEvent, ChangeEvent, useState, useEffect } from 'react';
-import { PatientData, putPatientGroup, getUnassignedPatients } from '../requests/patients';
+import { PatientData, putPatientGroup } from '../requests/patients';
 import { GroupData } from '../requests/groups';
 import { ScheduleBlock } from './Schedule';
+
+import { useAppSelector, useAppDispatch } from "../store";
+import { RootState } from '../store';
+import { patientGroupUpdated } from '../store/patientSlice';
 
 interface AssignPatientToGroupProps {
 	group: GroupData;
@@ -21,18 +25,23 @@ const defaultPatient = {
 const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {
 	const [patient, setPatient] = useState<PatientData | undefined>(defaultPatient);
 	const [availablePatients, setAvailablePatients] = useState<PatientData[]>([]);
+	const patients: PatientData[] = useAppSelector(
+		(state: RootState) => state.patients
+	  )
+	
+	  const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		(async () => {
 			setAvailablePatients(props.unassignedPatients.filter((pat) => doesPatientHaveOverlap(pat, props.groupPatients)));
 		})();
-	}, [props.groupPatients, props.unassignedPatients]);
+	}, [props.groupPatients, props.unassignedPatients, patients]);
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		event.preventDefault();
 		if (patient && patient.id > 0) {
 			await putPatientGroup(patient.id, props.group.id);
-			props.onAssignPatientToGroup(patient);
+			dispatch(patientGroupUpdated({patient: patient, group: props.group}))
 			setPatient(defaultPatient);
 		}
 	};

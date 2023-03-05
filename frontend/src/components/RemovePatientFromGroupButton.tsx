@@ -1,6 +1,6 @@
 import { FC, FormEvent } from 'react';
-import { Dispatch } from "redux"
-import { useDispatch } from "react-redux"
+import { useAppDispatch } from "../store";
+import { patientGroupRemoved } from '../store/patientSlice';
 import { removePatientFromGroup, PatientData } from '../requests/patients';
 
 interface RemovePatientFromGroupProps {
@@ -9,10 +9,14 @@ interface RemovePatientFromGroupProps {
 }
 
 const RemovePatientFromGroupButton: FC<RemovePatientFromGroupProps> = (props) => {
+
+	const dispatch = useAppDispatch()
+
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		event.preventDefault();
 		await removePatientFromGroup(props.patient.id);
-		await props.onRemovePatientFromGroup(props.patient);
+		props.onRemovePatientFromGroup(props.patient);
+		dispatch(patientGroupRemoved({patient: props.patient}))
 	};
 
 	return (
