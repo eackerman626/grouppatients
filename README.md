@@ -1,17 +1,5 @@
 # Group Builder
 
-## Objective
-
-Charlie Health has set out on a mission to re-imagine how high acuity care is
-delivered to teens and young adults—particularly those in rural populations. Our
-initial offering is a virtual intensive outpatient program (vIOP), which
-connects like-minded virtual groups with therapists that specialize in their
-specific mental health needs.
-
-To scale our offering to help millions, we need software to manage patients and
-the care groups in which they participate. In this assessment, you will add
-functionality to a sample care management application.
-
 ## Brief
 
 This starter application is a React app that fetches data from a FastAPI server.
@@ -110,7 +98,3 @@ database password, which is "password". You should then be able to navigate down
 and inspect the schema and content of the tables in the database. For example,
 to access the patients table:
 `Servers > Group Builder DB > Databases > group-builder > Schemas > public > Tables > patients`
-
-All the best and happy coding,
-
-The Charlie Health Team
