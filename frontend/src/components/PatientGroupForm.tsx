@@ -3,7 +3,7 @@ import { PatientData, putPatientGroup } from '../requests/patients';
 import { GroupData } from '../requests/groups';
 import { ScheduleBlock } from './Schedule';
 
-import { useAppSelector, useAppDispatch } from "../store";
+import { useAppSelector, useAppDispatch } from '../store';
 import { RootState } from '../store';
 import { patientGroupUpdated } from '../store/patientSlice';
 
@@ -25,11 +25,9 @@ const defaultPatient = {
 const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {
 	const [patient, setPatient] = useState<PatientData | undefined>(defaultPatient);
 	const [availablePatients, setAvailablePatients] = useState<PatientData[]>([]);
-	const patients: PatientData[] = useAppSelector(
-		(state: RootState) => state.patients
-	  )
-	
-	  const dispatch = useAppDispatch()
+	const patients: PatientData[] = useAppSelector((state: RootState) => state.patients);
+
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		(async () => {
@@ -41,7 +39,7 @@ const PatientGroupForm: FC<AssignPatientToGroupProps> = (props) => {
 		event.preventDefault();
 		if (patient && patient.id > 0) {
 			await putPatientGroup(patient.id, props.group.id);
-			dispatch(patientGroupUpdated({patient: patient, group: props.group}))
+			dispatch(patientGroupUpdated({ patient: patient, group: props.group }));
 			setPatient(defaultPatient);
 		}
 	};

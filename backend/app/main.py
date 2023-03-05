@@ -50,12 +50,12 @@ async def startup_event():
     schedule_blocks = seed_schedule_blocks(session_schedule_blocks)
     patients = seed_patients(
         [
-            schemas.PatientBase(first_name="Natasha", last_name="Romanoff"),
-            schemas.PatientBase(first_name="Carol", last_name="Danvers"),
-            schemas.PatientBase(first_name="Wanda", last_name="Maximoff"),
-            schemas.PatientBase(first_name="James", last_name="Holden"),
             schemas.PatientBase(first_name="Naomi", last_name="Nagata"),
+            schemas.PatientBase(first_name="James", last_name="Holden"),
             schemas.PatientBase(first_name="Amos", last_name="Burton"),
+            schemas.PatientBase(first_name="Alex", last_name="Kamal"),
+            schemas.PatientBase(first_name="Chrisjen", last_name="Avasarala"),
+            schemas.PatientBase(first_name="Bobbie", last_name="Draper"),
         ]
     )
     groups = seed_groups(

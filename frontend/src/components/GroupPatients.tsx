@@ -5,7 +5,7 @@ import RemovePatientFromGroupButton from './RemovePatientFromGroupButton';
 import { getGroupPatients, GroupData } from '../requests/groups';
 import PatientGroupForm from './PatientGroupForm';
 
-import { useAppSelector } from "../store";
+import { useAppSelector } from '../store';
 import { RootState } from '../store';
 
 interface GroupPatientProps {
@@ -13,15 +13,13 @@ interface GroupPatientProps {
 }
 
 const GroupPatients: FC<GroupPatientProps> = (props) => {
-	// don't love this, I could do frontend filtering now that I have redux set up
 	const [groupPatients, setGroupPatients] = useState<PatientData[]>([]);
 	const [unassignedPatients, setUnassignedPatients] = useState<PatientData[]>([]);
-	const patients: PatientData[] = useAppSelector(
-		(state: RootState) => state.patients
-	  )
+	const patients: PatientData[] = useAppSelector((state: RootState) => state.patients);
 
 	useEffect(() => {
 		(async () => {
+			// ERA: don't love this, I could do frontend filtering now that I have redux set up
 			setGroupPatients(await getGroupPatients(props.group.id));
 			setUnassignedPatients(await getUnassignedPatients());
 		})();
