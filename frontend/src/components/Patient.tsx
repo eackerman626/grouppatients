@@ -8,7 +8,7 @@ interface PatientProps {
 
 const Patient: FC<PatientProps> = ({ patient }) => {
   return (
-    <span data-testid="patient">
+    <span data-testid="patient" id={`${patient.id}`}>
       {patient.first_name} {patient.last_name}:&nbsp;
       <Schedule schedule={patient.availabilities} />
     </span>

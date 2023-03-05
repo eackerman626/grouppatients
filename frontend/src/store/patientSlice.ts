@@ -33,7 +33,7 @@ const patientsSlice = createSlice({
 	reducers: {
 		patientAdded(state: PatientState, action: PayloadAction<PatientData>) {
 			const newPatient: PatientData = {
-				id: Math.random(), // should implement a counter here, this does not match up with what is in the db
+				id: action.payload.id,
 				first_name: action.payload.first_name,
 				last_name: action.payload.last_name,
 				availabilities: [],

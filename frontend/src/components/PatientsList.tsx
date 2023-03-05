@@ -11,7 +11,7 @@ import AddPatientAvailabilityForm from "./AddPatientAvailabilityForm";
 import { useAppSelector, useAppDispatch } from "../store";
 
 import { RootState } from "../store";
-import { patientAdded, fetchPatients } from "../store/patientSlice";
+import { patientAdded, fetchPatients, patientAvailabilityUpdated } from "../store/patientSlice";
 
 const PatientsList: FC = () => {
   const patients: PatientData[] = useAppSelector(
@@ -24,7 +24,6 @@ const PatientsList: FC = () => {
     [dispatch]
   )
 
-  //const [patients, setPatients] = useState<PatientData[]>([]);
   const [scheduleBlocks, setScheduleBlocks] = useState<ScheduleBlockData[]>([]);
 
   useEffect(() => {
@@ -34,21 +33,11 @@ const PatientsList: FC = () => {
     })();
   }, []);
 
-  // const handleAddPatient = (patient: PatientData): void => {
-  //   setPatients([...patients, patient]);
-  // };
-
   const handleAddPatientAvailability = (
     updatedPatient: PatientData,
     scheduleBlocks: ScheduleBlockData[]
   ): void => {
-    // setPatients(
-    //   patients.map((patient) =>
-    //     patient.id === updatedPatient.id
-    //       ? { ...updatedPatient, availabilities: scheduleBlocks }
-    //       : patient
-    //   )
-    // );
+      dispatch(patientAvailabilityUpdated({patient: updatedPatient, availabilities: scheduleBlocks}))
   };
 
   return (
