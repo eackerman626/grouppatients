@@ -1,14 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { PatientData } from '../requests/patients';
+import { getPatients, PatientData } from '../requests/patients';
 import { ScheduleBlockData } from '../requests/schedule_blocks';
 import { GroupData } from '../requests/groups';
 
 interface PatientState {
+	status: string;
 	patients: PatientData[];
 }
 
 const initialState: PatientState = {
+	status: 'idle',
 	patients: [
 		{
 			id: 999,
@@ -19,6 +21,11 @@ const initialState: PatientState = {
 		},
 	],
 };
+
+export const fetchPatients = createAsyncThunk('fetchPatients', async () => {
+	const response = await getPatients();
+	return response;
+});
 
 const patientsSlice = createSlice({
 	name: 'patients',
@@ -54,6 +61,20 @@ const patientsSlice = createSlice({
 			if (matchingPatient) {
 				matchingPatient.group = null;
 			}
+		},
+	},
+	extraReducers: {
+		[fetchPatients.pending.type]: (state, action) => {
+			state.status = 'loading';
+			state.patients = [];
+		},
+		[fetchPatients.fulfilled.type]: (state, action) => {
+			state.status = 'idle';
+			state.patients = action.payload;
+		},
+		[fetchPatients.rejected.type]: (state, action) => {
+			state.status = 'error';
+			state.patients = [];
 		},
 	},
 });

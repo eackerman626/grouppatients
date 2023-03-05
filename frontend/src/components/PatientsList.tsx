@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, useCallback } from "react";
 import AddPatientForm from "./AddPatientForm";
 import Patient from "./Patient";
-import { getPatients, PatientData } from "../requests/patients";
+import { PatientData } from "../requests/patients";
 import {
   getScheduleBlocks,
   ScheduleBlockData,
@@ -11,7 +11,7 @@ import AddPatientAvailabilityForm from "./AddPatientAvailabilityForm";
 import { useAppSelector, useAppDispatch } from "../store";
 
 import { RootState } from "../store";
-import { patientAdded } from "../store/patientSlice";
+import { patientAdded, fetchPatients } from "../store/patientSlice";
 
 const PatientsList: FC = () => {
   const patients: PatientData[] = useAppSelector(
@@ -29,7 +29,7 @@ const PatientsList: FC = () => {
 
   useEffect(() => {
     (async () => {
-      // setPatients(await getPatients());
+      dispatch(fetchPatients())
       setScheduleBlocks(await getScheduleBlocks());
     })();
   }, []);
