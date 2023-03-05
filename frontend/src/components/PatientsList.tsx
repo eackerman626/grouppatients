@@ -10,12 +10,12 @@ import AddPatientAvailabilityForm from "./AddPatientAvailabilityForm";
 
 import { useAppSelector, useAppDispatch } from "../store";
 
-import { PatientState } from "../store/reducer";
+import { RootState } from "../store";
 import { patientAdded } from "../store/patientSlice";
 
 const PatientsList: FC = () => {
   const patients: PatientData[] = useAppSelector(
-    (state: PatientState) => state.patients
+    (state: RootState) => state.patients
   )
   const dispatch = useAppDispatch()
 

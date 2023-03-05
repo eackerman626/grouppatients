@@ -4,7 +4,7 @@ import reducer from './patientSlice';
 
 export const store = configureStore({ reducer: reducer });
 
-type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
